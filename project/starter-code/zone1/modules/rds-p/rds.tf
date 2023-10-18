@@ -33,23 +33,25 @@ resource "aws_db_subnet_group" "udacity_db_subnet_group" {
   subnet_ids = var.private_subnet_ids
 
 }
+
 resource "aws_rds_cluster" "udacity_cluster" {
-  cluster_identifier       = "udacity-db-cluster"
-  availability_zones       = ["us-east-2a", "us-east-2b"]
+  cluster_identifier      = "udacity-db-cluster"
+  engine                  = "aurora-mysql"
+  engine_version          = "5.7.mysql_aurora.2.03.2"
+  availability_zones      = ["us-west-2a", "us-west-2b", "us-west-2c"]
+  database_name           = "udacityc2"
+  master_username         = "udacity"
+  master_password         = "MyUdacityPassword"
+  backup_retention_period = 5
+  vpc_security_group_ids  = [aws_security_group.db_sg_1.id]
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.cluster_pg.name
-  database_name            = "udacityc2"
-  master_username          = "udacity"
-  master_password          = "MyUdacityPassword"
-  vpc_security_group_ids   = [aws_security_group.db_sg_1.id]
-  db_subnet_group_name     = aws_db_subnet_group.udacity_db_subnet_group.name
-  engine_mode              = "provisioned"
-  engine                   = "aurora-mysql"
-  engine_version           = "5.7.mysql_aurora.2.03.2" 
-  skip_final_snapshot      = true
-  storage_encrypted        = false
-  backup_retention_period  = 5
-  depends_on = [aws_rds_cluster_parameter_group.cluster_pg]
+  vpc_security_group_ids  = [aws_security_group.db_sg_1.id]
+  db_subnet_group_name    = aws_db_subnet_group.udacity_db_subnet_group.name
+  skip_final_snapshot     = true
+  preferred_backup_window = "07:00-09:00"
+  depends_on              = [aws_rds_cluster_parameter_group.cluster_pg]
 }
+
 
 output "db_cluster_arn" {
   value = aws_rds_cluster.udacity_cluster.arn
