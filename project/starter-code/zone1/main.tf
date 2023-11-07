@@ -38,16 +38,12 @@ module "vpc_west" {
    "kubernetes.io/role/elb" = 1
    }
 provider "aws" {
-   region = "us-west-1"  # Specify the desired AWS region
-   }
-required_providers {
-    aws = {
+   aws = {
       source = "hashicorp/aws"
       version = ">= 3.0.0"
-    }
-  }
- }
-
+      region = "us-west-1"
+    } 
+   }
 output "vpc_id" {
    value = module.vpc_west.vpc_id
  }
