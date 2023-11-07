@@ -37,9 +37,9 @@ locals {
    public_subnet_tags = {
      "kubernetes.io/role/elb" = 1
    }
-  providers = {
-    aws = aws.us-west-1
-  }
+  provider "aws" {
+  region = "us-west-1"  # Specify the desired AWS region
+   }
  }
 
 output "vpc_id" {
