@@ -9,7 +9,6 @@ locals {
    }
  }
  provider "aws" {
-     alias  = "usw1"
      region = "us-west-1"
  }
  module "vpc" {
@@ -39,6 +38,9 @@ module "vpc_west" {
   }
   public_subnet_tags = {
     "kubernetes.io/role/elb" = 1
+  }
+  providers = {
+    aws = aws.usw1  # Use the AWS provider defined at the root level
   }
 
 }
