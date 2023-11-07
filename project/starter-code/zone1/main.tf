@@ -40,9 +40,7 @@ module "vpc_west" {
   public_subnet_tags = {
     "kubernetes.io/role/elb" = 1
   }
-  providers = {
-    aws = aws.usw1  # Use the AWS provider defined at the root level
-  }
+
 }
 output "vpc_id" {
    value = module.vpc_west.vpc_id
