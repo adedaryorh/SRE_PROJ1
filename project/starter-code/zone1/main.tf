@@ -40,6 +40,12 @@ module "vpc_west" {
 provider "aws" {
    region = "us-west-1"  # Specify the desired AWS region
    }
+required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = ">= 3.0.0"
+    }
+  }
  }
 
 output "vpc_id" {
